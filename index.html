@@ -3,50 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#010108">
-<title>Para Ian ✦</title>
+<title>Para Ian 💛</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="loader"><div class="loader-dot"></div></div>
-<canvas id="galaxy"></canvas>
+<div id="app">
+  <section class="screen intro active" id="intro">
+    <div class="intro-glow"></div>
+    <div class="intro-content">
+      <p class="eyebrow">PARA IAN</p>
+      <div class="sunflower">🌻</div>
+      <h1>Toca para iniciar</h1>
+      <p class="hint">Tengo algo que decirte…</p>
+    </div>
+  </section>
 
-<section id="intro" class="scene visible">
-  <div class="intro-center">
-    <div class="tiny-flower">✦</div>
-    <div class="kicker">PARA IAN</div>
-    <div class="subkicker">PARA LA PERSONA QUE AMO</div>
-    <button id="begin">Toca para comenzar <span>♡</span></button>
-  </div>
-</section>
+  <section class="screen envelope-screen" id="envelope">
+    <div class="soft-orb"></div>
+    <p class="eyebrow">PARA LA PERSONA QUE AMO</p>
+    <button class="letter-btn" id="openLetter" aria-label="Abrir carta">💌</button>
+    <p class="tap-note">Toca la carta</p>
+  </section>
 
-<section id="main" class="scene">
-  <div class="vignette"></div>
-  <div class="topline">para Ian</div>
-  <div id="orbitWords"></div>
-  <div class="heart-stage">
-    <canvas id="heartCanvas"></canvas>
-    <div class="heart-glow"></div>
-  </div>
+  <section class="screen universe" id="universe">
+    <canvas id="stars"></canvas>
+    <div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div>
+    <div class="universe-ui">
+      <p class="tiny">PARA TI</p>
+      <div class="title">IAN</div>
+    </div>
 
-  <div id="message" class="message">
-    <div class="rule"></div>
-    <p>Te amo con la lógica de las mareas y la irracionalidad de un relámpago en la noche: algo que no necesita permiso para existir.</p>
-    <p>Si el amor es una locura, prefiero perderme en ella con vos que mantener la cordura en un mundo que ya ha perdido el sentido.</p>
-    <div class="signature">— para Ian, con amor</div>
-  </div>
+    <div class="heart-wrap">
+      <div class="orbit orbit-a">TE AMO · IAN · TE AMO · IAN ·</div>
+      <div class="orbit orbit-b">PARA SIEMPRE · CON VOS · PARA SIEMPRE ·</div>
+      <div class="heart-caption">♡</div>
+    </div>
 
-  <button id="music" class="music" aria-label="Música">♫</button>
-</section>
+    <div class="message-card" id="messageCard">
+      <div class="card-label">PARA TI 💛</div>
+      <p>Te amo con la lógica de las mareas y la irracionalidad de un relámpago en la noche: algo que no necesita permiso para existir.</p>
+      <p>Si el amor es una locura, prefiero perderme en ella con vos que mantener la cordura en un mundo que ya ha perdido el sentido.</p>
+      <span class="signature">— con todo mi amor</span>
+    </div>
 
-<audio id="audio" preload="auto" loop>
-  <!-- Si tenés un archivo de audio con permiso para usarlo:
-  <source src="yellow.mp3" type="audio/mpeg">
-  -->
-</audio>
+    <button class="music" id="musicBtn" aria-label="Música">♫</button>
+    <audio id="audio" preload="auto" loop></audio>
+  </section>
+</div>
 <script src="script.js"></script>
 </body>
 </html>

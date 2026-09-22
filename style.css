@@ -1,35 +1,50 @@
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#010108;color:#fff}
-body{font-family:Montserrat,sans-serif;-webkit-tap-highlight-color:transparent}
-button{font:inherit}
-#galaxy,#heartCanvas{position:fixed;inset:0;width:100%;height:100%}
-#galaxy{z-index:0}
-.scene{position:fixed;inset:0;z-index:2;opacity:0;visibility:hidden;transition:opacity 1.8s ease,visibility 1.8s}
-.scene.visible{opacity:1;visibility:visible}
-#loader{position:fixed;inset:0;z-index:99;background:#010108;display:grid;place-items:center;transition:opacity 1s}
-#loader.hide{opacity:0;pointer-events:none}
-.loader-dot{width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 18px #fff;animation:load 1s infinite alternate}
-@keyframes load{to{transform:scale(2);opacity:.3}}
-#intro{display:grid;place-items:center;background:radial-gradient(circle at 50% 48%,rgba(30,34,72,.18),transparent 48%)}
-.intro-center{text-align:center;transform:translateY(2vh)}
-.tiny-flower{font-size:clamp(30px,9vw,58px);color:#ffe5a2;text-shadow:0 0 35px rgba(255,218,130,.65);animation:breathe 3.5s ease-in-out infinite}
-.kicker{margin:20px 0 6px;letter-spacing:.35em;font-size:clamp(14px,3.8vw,23px);font-weight:400;color:rgba(255,241,205,.92)}
-.subkicker{margin:0 0 30px;letter-spacing:.28em;font-size:clamp(8px,2.2vw,12px);font-weight:300;color:rgba(255,255,255,.55)}
-#begin{padding:13px 23px;border-radius:999px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.045);color:#fff;cursor:pointer;backdrop-filter:blur(10px);box-shadow:0 0 40px rgba(255,215,130,.04);transition:.35s}
-#begin:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
-#begin span{color:#ffe2a0;margin-left:7px}
-.vignette{position:absolute;inset:0;background:radial-gradient(circle at 50% 43%,transparent 0,transparent 42%,rgba(0,0,8,.32) 75%,rgba(0,0,0,.8) 100%);pointer-events:none}
-.topline{position:absolute;top:7vh;left:50%;transform:translateX(-50%);font:500 clamp(17px,4vw,27px)/1 "Cormorant Garamond",serif;letter-spacing:.35em;color:rgba(255,232,181,.78);opacity:0;animation:fade 2s 5.2s forwards}
-.heart-stage{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
-#heartCanvas{position:absolute;inset:0}
-.heart-glow{width:min(55vw,370px);height:min(55vw,370px);border-radius:50%;background:rgba(255,211,122,.045);filter:blur(50px);opacity:0;animation:glow 4s 4.5s forwards}
-.message{position:absolute;left:50%;bottom:5.5vh;transform:translateX(-50%) translateY(20px);width:min(88vw,760px);text-align:center;opacity:0;filter:blur(8px);animation:message 3s 8s forwards}
-.rule{width:35px;height:1px;margin:0 auto 17px;background:rgba(255,224,163,.6)}
-.message p{margin:0 auto 11px;font:500 clamp(16px,4.2vw,25px)/1.32 "Cormorant Garamond",serif;text-shadow:0 0 25px rgba(255,215,150,.12)}
-.signature{margin-top:15px;font:400 clamp(11px,2.7vw,15px)/1 "Montserrat",sans-serif;letter-spacing:.16em;color:rgba(255,224,168,.68)}
-.music{position:absolute;right:19px;bottom:18px;width:43px;height:43px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:#fff;opacity:0;animation:fade 2s 9s forwards;cursor:pointer;backdrop-filter:blur(8px)}
-@keyframes fade{to{opacity:1}}
-@keyframes message{to{opacity:1;filter:blur(0);transform:translateX(-50%) translateY(0)}}
-@keyframes glow{to{opacity:1;transform:scale(1.12)}}
-@keyframes breathe{50%{transform:scale(1.08);filter:brightness(1.25)}}
-@media(max-height:650px){.topline{top:4vh}.message{bottom:2.5vh}.message p{font-size:clamp(14px,3.4vw,20px)}}
+:root{--cream:#fff8ef;--gold:#f5c96a;--muted:#d8d0c8}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05030b}
+body{font-family:Inter,system-ui,sans-serif;color:var(--cream)}
+button{font:inherit;border:0}
+.screen{position:fixed;inset:0;display:grid;place-items:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1.1s ease,visibility 1.1s}
+.screen.active{opacity:1;visibility:visible;pointer-events:auto}
+.intro{background:radial-gradient(circle at 50% 43%,#fff6df 0,#f9e8d3 17%,#a98573 38%,#20151c 66%,#05030b 100%)}
+.intro:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.9),transparent 25%),linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.48))}
+.intro-glow{position:absolute;width:30vmax;height:30vmax;border-radius:50%;background:rgba(255,220,154,.18);filter:blur(55px);animation:pulse 4s infinite}
+.intro-content{text-align:center;position:relative;z-index:2}
+.eyebrow{font-size:10px;letter-spacing:.38em;margin:0 0 22px;color:rgba(255,255,255,.72)}
+.sunflower{font-size:92px;filter:drop-shadow(0 10px 35px rgba(255,196,65,.35));animation:float 4s ease-in-out infinite}
+h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:34px;letter-spacing:.02em;margin:24px 0 7px}
+.hint{font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.58)}
+.envelope-screen{background:radial-gradient(circle at 50% 45%,#fff7ed 0,#d9bba6 25%,#6c4c4b 52%,#171017 80%,#05030b 100%)}
+.soft-orb{position:absolute;width:48vmin;height:48vmin;border-radius:50%;background:rgba(255,234,205,.17);filter:blur(45px)}
+.letter-btn{position:relative;width:112px;height:82px;border-radius:18px;background:rgba(255,255,255,.82);box-shadow:0 25px 80px rgba(0,0,0,.35),0 0 55px rgba(255,220,175,.2);font-size:48px;cursor:pointer;transform:rotate(-2deg);transition:.35s}
+.letter-btn:hover{transform:rotate(0) scale(1.07)}
+.tap-note{position:absolute;bottom:14%;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.58)}
+.universe{background:#03030a;overflow:hidden}
+#stars{position:absolute;inset:0;width:100%;height:100%}
+.nebula{position:absolute;border-radius:50%;filter:blur(70px);opacity:.16;pointer-events:none}
+.n1{width:50vmax;height:25vmax;left:-15vmax;top:12vmax;background:#7355b7;transform:rotate(-25deg)}
+.n2{width:40vmax;height:30vmax;right:-12vmax;top:25vmax;background:#315eaa}
+.n3{width:35vmax;height:22vmax;left:30vmax;bottom:-12vmax;background:#b05a78}
+.universe-ui{position:absolute;top:7%;left:0;right:0;text-align:center;z-index:3;opacity:0;animation:appear 1.8s 1s forwards}
+.universe-ui .tiny{font-size:9px;letter-spacing:.55em;color:rgba(255,255,255,.48);margin:0 0 5px}
+.universe-ui .title{font-family:"Cormorant Garamond",serif;font-size:22px;letter-spacing:.25em;color:#fff}
+.heart-wrap{position:absolute;left:50%;top:42%;width:min(88vw,470px);height:min(68vw,365px);transform:translate(-50%,-50%);z-index:2}
+.heart-wrap:before{content:"";position:absolute;left:50%;top:45%;width:30%;height:30%;transform:translate(-50%,-50%);background:rgba(255,214,133,.12);filter:blur(35px);border-radius:50%;animation:heartGlow 3s ease-in-out infinite}
+.heart-caption{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);font-size:35px;color:rgba(255,240,211,.8);text-shadow:0 0 25px rgba(255,207,116,.8);animation:heartbeat 2.4s ease-in-out infinite}
+.orbit{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:12px;letter-spacing:.35em;color:rgba(255,232,190,.64);white-space:nowrap;text-shadow:0 0 12px rgba(255,215,140,.45)}
+.orbit-a{animation:spin 18s linear infinite}
+.orbit-b{animation:spinReverse 27s linear infinite;transform:scale(.76)}
+.message-card{position:absolute;left:50%;bottom:7%;transform:translateX(-50%) translateY(20px);width:min(88vw,540px);padding:22px 24px 20px;text-align:center;background:rgba(8,7,16,.48);border:1px solid rgba(255,232,190,.13);border-radius:22px;backdrop-filter:blur(12px);box-shadow:0 20px 80px rgba(0,0,0,.35);opacity:0;z-index:5;animation:cardIn 1.3s 3.2s forwards}
+.card-label{font-size:9px;letter-spacing:.45em;color:#e8c989;margin-bottom:14px}
+.message-card p{font-family:"Cormorant Garamond",serif;font-size:18px;line-height:1.22;color:#f8eee1;margin:0 auto 9px;max-width:470px}
+.signature{font-family:"Cormorant Garamond",serif;font-size:14px;color:rgba(255,255,255,.5);font-style:italic}
+.music{position:absolute;right:22px;bottom:22px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;z-index:8;cursor:pointer;backdrop-filter:blur(8px)}
+.music.on{background:rgba(245,201,106,.2);color:#f5c96a}
+@keyframes pulse{50%{transform:scale(1.12);opacity:.7}}
+@keyframes float{50%{transform:translateY(-8px)}}
+@keyframes appear{to{opacity:1}}
+@keyframes heartGlow{50%{transform:translate(-50%,-50%) scale(1.3);opacity:.75}}
+@keyframes heartbeat{0%,100%{transform:translate(-50%,-50%) scale(1)}15%{transform:translate(-50%,-50%) scale(1.15)}30%{transform:translate(-50%,-50%) scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinReverse{to{transform:scale(.76) rotate(-360deg)}}
+@keyframes cardIn{to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media(max-width:600px){h1{font-size:31px}.sunflower{font-size:82px}.heart-wrap{top:39%;height:310px}.message-card{bottom:5%;padding:18px 18px}.message-card p{font-size:17px}.orbit{font-size:10px}.music{bottom:15px;right:15px}}

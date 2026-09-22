@@ -1,29 +1,70 @@
-const bg=document.querySelector("#galaxy"), bctx=bg.getContext("2d");
-const hc=document.querySelector("#heartCanvas"), hctx=hc.getContext("2d");
-const intro=document.querySelector("#intro"), main=document.querySelector("#main");
-const begin=document.querySelector("#begin"), audio=document.querySelector("#audio"), music=document.querySelector("#music");
-const loader=document.querySelector("#loader"), orbitWords=document.querySelector("#orbitWords");
-let W,H,D,stars=[],nebula=[],particles=[],startTime=0,started=false;
-const TAU=Math.PI*2;
-function resize(){D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
-[bg,hc].forEach(c=>{c.width=W*D;c.height=H*D;c.style.width=W+"px";c.style.height=H+"px"});
-bctx.setTransform(D,0,0,D,0,0);hctx.setTransform(D,0,0,D,0,0);makeBackground();if(started)makeHeart()}
-function rnd(a,b){return a+Math.random()*(b-a)}
-function makeBackground(){stars=Array.from({length:Math.min(650,Math.floor(W*H/3000))},()=>({x:rnd(0,W),y:rnd(0,H),r:rnd(.25,1.5),a:rnd(.25,.9),p:rnd(0,TAU),s:rnd(.4,1.7)}));
-nebula=Array.from({length:Math.min(170,Math.floor(W*H/13000))},()=>({x:rnd(0,W),y:rnd(0,H),r:rnd(25,110),a:rnd(.008,.035),p:rnd(0,TAU)}))}
-function bgLoop(t){bctx.clearRect(0,0,W,H);const g=bctx.createRadialGradient(W*.5,H*.43,0,W*.5,H*.43,Math.max(W,H)*.7);
-g.addColorStop(0,"rgba(28,31,72,.42)");g.addColorStop(.4,"rgba(8,10,30,.24)");g.addColorStop(1,"rgba(0,0,0,0)");bctx.fillStyle=g;bctx.fillRect(0,0,W,H);
-for(const n of nebula){n.p+=.0004;const ng=bctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);ng.addColorStop(0,`rgba(255,214,145,${n.a})`);ng.addColorStop(1,"rgba(255,214,145,0)");bctx.fillStyle=ng;bctx.beginPath();bctx.arc(n.x,n.y,n.r,0,TAU);bctx.fill()}
-for(const s of stars){const a=s.a*(.55+.45*Math.sin(t*.001*s.s+s.p));bctx.globalAlpha=a;bctx.fillStyle="#fff";bctx.beginPath();bctx.arc(s.x,s.y,s.r,0,TAU);bctx.fill()}bctx.globalAlpha=1;requestAnimationFrame(bgLoop)}
-function heartPoint(t){const x=16*Math.pow(Math.sin(t),3);const y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));const scale=Math.min(W,H)*.0155;return{x:W/2+x*scale,y:H*.39+y*scale}}
-function makeHeart(){particles=[];const count=Math.min(1800,Math.max(850,Math.floor(W*H/420)));
-for(let i=0;i<count;i++){const t=rnd(0,TAU),edge=heartPoint(t),fill=rnd(0,1),cx=W/2,cy=H*.39;const px=cx+(edge.x-cx)*(0.25+0.75*Math.sqrt(fill)),py=cy+(edge.y-cy)*(0.25+0.75*Math.sqrt(fill));
-particles.push({sx:rnd(0,W),sy:rnd(0,H),tx:px+rnd(-2.5,2.5),ty:py+rnd(-2.5,2.5),x:0,y:0,r:rnd(.35,1.45),a:rnd(.35,1),tw:rnd(0,TAU),delay:rnd(0,2.8),edge:fill>.83})}}
-function drawHeart(now){hctx.clearRect(0,0,W,H);if(!started){requestAnimationFrame(drawHeart);return}const elapsed=(now-startTime)/1000,ease=x=>1-Math.pow(1-x,4);
-for(const p of particles){const q=Math.max(0,Math.min(1,(elapsed-p.delay)/3.4)),e=ease(q);p.x=p.sx+(p.tx-p.sx)*e;p.y=p.sy+(p.ty-p.sy)*e;const tw=.65+.35*Math.sin(now*.002+p.tw);hctx.globalAlpha=p.a*tw*Math.min(1,q*2);hctx.fillStyle=p.edge?"rgba(255,226,157,.98)":"rgba(219,224,255,.78)";hctx.beginPath();hctx.arc(p.x,p.y,p.r,0,TAU);hctx.fill()}
-if(elapsed>2){hctx.globalAlpha=.18;hctx.strokeStyle="rgba(255,221,150,.7)";hctx.lineWidth=.45;hctx.beginPath();for(let i=0;i<=180;i++){const p=heartPoint(i/180*TAU);if(i===0)hctx.moveTo(p.x,p.y);else hctx.lineTo(p.x,p.y)}hctx.stroke();hctx.globalAlpha=1}requestAnimationFrame(drawHeart)}
-function createOrbit(){orbitWords.innerHTML="";const phrase="TE AMO · IAN · TE AMO · IAN · ";const radius=Math.min(W,H)*.265;
-[...phrase].forEach((ch,i)=>{const s=document.createElement("span");s.textContent=ch;Object.assign(s.style,{position:"absolute",left:"50%",top:"39%",fontFamily:"Cormorant Garamond,serif",fontSize:`${Math.max(11,Math.min(17,W*.035))}px`,color:"rgba(255,235,190,.82)",textShadow:"0 0 12px rgba(255,220,145,.75)",opacity:"0",transition:"opacity 1.2s ease"});
-const a=i/phrase.length*TAU-Math.PI/2;s.style.transform=`translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius*.78}px) rotate(${a+Math.PI/2}rad)`;orbitWords.appendChild(s);setTimeout(()=>s.style.opacity="1",2700+i*35)})}
-async function start(){if(started)return;started=true;startTime=performance.now();intro.classList.remove("visible");main.classList.add("visible");makeHeart();createOrbit();try{if(audio.querySelector("source"))await audio.play()}catch(e){}}
-begin.addEventListener("click",start);music.addEventListener("click",async()=>{if(audio.paused){try{await audio.play();music.textContent="♫"}catch(e){}}else{audio.pause();music.textContent="Ⅱ"}});addEventListener("resize",resize);resize();requestAnimationFrame(bgLoop);requestAnimationFrame(drawHeart);setTimeout(()=>loader.classList.add("hide"),600);
+const intro=document.getElementById('intro');
+const envelope=document.getElementById('envelope');
+const universe=document.getElementById('universe');
+const openLetter=document.getElementById('openLetter');
+const audio=document.getElementById('audio');
+const musicBtn=document.getElementById('musicBtn');
+const canvas=document.getElementById('stars');
+const ctx=canvas.getContext('2d');
+
+const MUSIC_FILE='[Lv.04] Yellow - Cold Play  (★★☆☆☆)  Drum Cover, Score, Sheet Music, Lessons, Tutorial  DRUMMATE_1790044583659.mp3';
+audio.src=MUSIC_FILE;
+
+function show(el){
+  [intro,envelope,universe].forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+}
+function startMusic(){
+  audio.play().then(()=>musicBtn.classList.add('on')).catch(()=>{});
+}
+intro.addEventListener('click',()=>{ show(envelope); startMusic(); });
+openLetter.addEventListener('click',()=>{ show(universe); startMusic(); });
+musicBtn.addEventListener('click',(e)=>{
+  e.stopPropagation();
+  if(audio.paused){ audio.play().then(()=>musicBtn.classList.add('on')).catch(()=>{}); }
+  else { audio.pause(); musicBtn.classList.remove('on'); }
+});
+
+// Starfield + luminous heart particles
+let W,H,DPR,stars=[],heartParticles=[],t=0;
+function resize(){
+  DPR=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight;
+  canvas.width=W*DPR; canvas.height=H*DPR; canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  stars=Array.from({length:Math.min(240,Math.floor(W*H/6500))},()=>({
+    x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.35+.15,a:Math.random()*.75+.15,s:Math.random()*.012+.003
+  }));
+  heartParticles=Array.from({length:900},(_,i)=>{
+    const u=Math.random()*Math.PI*2;
+    const fill=Math.pow(Math.random(),.55);
+    return {u,fill,phase:Math.random()*6.28,seed:i};
+  });
+}
+addEventListener('resize',resize); resize();
+
+function heartXY(u, scale, fill=1){
+  const x=16*Math.pow(Math.sin(u),3);
+  const y=-(13*Math.cos(u)-5*Math.cos(2*u)-2*Math.cos(3*u)-Math.cos(4*u));
+  return {x:x*scale*fill,y:y*scale*fill};
+}
+function draw(){
+  t+=.012;
+  ctx.fillStyle='rgba(3,3,10,.22)'; ctx.fillRect(0,0,W,H);
+  for(const s of stars){
+    s.a += Math.sin(t+s.x)*s.s;
+    const a=.2+.25*(.5+.5*Math.sin(t*2+s.x));
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${a*s.a})`;ctx.fill();
+  }
+  const cx=W/2, cy=H*.42, scale=Math.min(W,H)/35;
+  for(const p of heartParticles){
+    const q=heartXY(p.u,scale,p.fill);
+    const wobble=Math.sin(t*1.7+p.phase)*.7;
+    const x=cx+q.x+wobble, y=cy+q.y;
+    const tw=.45+.55*(.5+.5*Math.sin(t*3+p.phase));
+    ctx.beginPath();ctx.arc(x,y,p.fill*1.05+.45,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,${190+Math.floor(45*tw)},${110+Math.floor(80*tw)},${.18+.55*tw})`;
+    ctx.shadowBlur=7;ctx.shadowColor='rgba(255,210,130,.8)';ctx.fill();ctx.shadowBlur=0;
+  }
+  requestAnimationFrame(draw);
+}
+draw();
