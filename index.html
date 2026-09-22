@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#010108">
+<title>Para Ian ✦</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="loader"><div class="loader-dot"></div></div>
+<canvas id="galaxy"></canvas>
+
+<section id="intro" class="scene visible">
+  <div class="intro-center">
+    <div class="tiny-flower">✦</div>
+    <div class="kicker">PARA IAN</div>
+    <div class="subkicker">PARA LA PERSONA QUE AMO</div>
+    <button id="begin">Toca para comenzar <span>♡</span></button>
+  </div>
+</section>
+
+<section id="main" class="scene">
+  <div class="vignette"></div>
+  <div class="topline">para Ian</div>
+  <div id="orbitWords"></div>
+  <div class="heart-stage">
+    <canvas id="heartCanvas"></canvas>
+    <div class="heart-glow"></div>
+  </div>
+
+  <div id="message" class="message">
+    <div class="rule"></div>
+    <p>Te amo con la lógica de las mareas y la irracionalidad de un relámpago en la noche: algo que no necesita permiso para existir.</p>
+    <p>Si el amor es una locura, prefiero perderme en ella con vos que mantener la cordura en un mundo que ya ha perdido el sentido.</p>
+    <div class="signature">— para Ian, con amor</div>
+  </div>
+
+  <button id="music" class="music" aria-label="Música">♫</button>
+</section>
+
+<audio id="audio" preload="auto" loop>
+  <!-- Si tenés un archivo de audio con permiso para usarlo:
+  <source src="yellow.mp3" type="audio/mpeg">
+  -->
+</audio>
+<script src="script.js"></script>
+</body>
+</html>

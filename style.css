@@ -1,0 +1,35 @@
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#010108;color:#fff}
+body{font-family:Montserrat,sans-serif;-webkit-tap-highlight-color:transparent}
+button{font:inherit}
+#galaxy,#heartCanvas{position:fixed;inset:0;width:100%;height:100%}
+#galaxy{z-index:0}
+.scene{position:fixed;inset:0;z-index:2;opacity:0;visibility:hidden;transition:opacity 1.8s ease,visibility 1.8s}
+.scene.visible{opacity:1;visibility:visible}
+#loader{position:fixed;inset:0;z-index:99;background:#010108;display:grid;place-items:center;transition:opacity 1s}
+#loader.hide{opacity:0;pointer-events:none}
+.loader-dot{width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 18px #fff;animation:load 1s infinite alternate}
+@keyframes load{to{transform:scale(2);opacity:.3}}
+#intro{display:grid;place-items:center;background:radial-gradient(circle at 50% 48%,rgba(30,34,72,.18),transparent 48%)}
+.intro-center{text-align:center;transform:translateY(2vh)}
+.tiny-flower{font-size:clamp(30px,9vw,58px);color:#ffe5a2;text-shadow:0 0 35px rgba(255,218,130,.65);animation:breathe 3.5s ease-in-out infinite}
+.kicker{margin:20px 0 6px;letter-spacing:.35em;font-size:clamp(14px,3.8vw,23px);font-weight:400;color:rgba(255,241,205,.92)}
+.subkicker{margin:0 0 30px;letter-spacing:.28em;font-size:clamp(8px,2.2vw,12px);font-weight:300;color:rgba(255,255,255,.55)}
+#begin{padding:13px 23px;border-radius:999px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.045);color:#fff;cursor:pointer;backdrop-filter:blur(10px);box-shadow:0 0 40px rgba(255,215,130,.04);transition:.35s}
+#begin:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+#begin span{color:#ffe2a0;margin-left:7px}
+.vignette{position:absolute;inset:0;background:radial-gradient(circle at 50% 43%,transparent 0,transparent 42%,rgba(0,0,8,.32) 75%,rgba(0,0,0,.8) 100%);pointer-events:none}
+.topline{position:absolute;top:7vh;left:50%;transform:translateX(-50%);font:500 clamp(17px,4vw,27px)/1 "Cormorant Garamond",serif;letter-spacing:.35em;color:rgba(255,232,181,.78);opacity:0;animation:fade 2s 5.2s forwards}
+.heart-stage{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+#heartCanvas{position:absolute;inset:0}
+.heart-glow{width:min(55vw,370px);height:min(55vw,370px);border-radius:50%;background:rgba(255,211,122,.045);filter:blur(50px);opacity:0;animation:glow 4s 4.5s forwards}
+.message{position:absolute;left:50%;bottom:5.5vh;transform:translateX(-50%) translateY(20px);width:min(88vw,760px);text-align:center;opacity:0;filter:blur(8px);animation:message 3s 8s forwards}
+.rule{width:35px;height:1px;margin:0 auto 17px;background:rgba(255,224,163,.6)}
+.message p{margin:0 auto 11px;font:500 clamp(16px,4.2vw,25px)/1.32 "Cormorant Garamond",serif;text-shadow:0 0 25px rgba(255,215,150,.12)}
+.signature{margin-top:15px;font:400 clamp(11px,2.7vw,15px)/1 "Montserrat",sans-serif;letter-spacing:.16em;color:rgba(255,224,168,.68)}
+.music{position:absolute;right:19px;bottom:18px;width:43px;height:43px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:#fff;opacity:0;animation:fade 2s 9s forwards;cursor:pointer;backdrop-filter:blur(8px)}
+@keyframes fade{to{opacity:1}}
+@keyframes message{to{opacity:1;filter:blur(0);transform:translateX(-50%) translateY(0)}}
+@keyframes glow{to{opacity:1;transform:scale(1.12)}}
+@keyframes breathe{50%{transform:scale(1.08);filter:brightness(1.25)}}
+@media(max-height:650px){.topline{top:4vh}.message{bottom:2.5vh}.message p{font-size:clamp(14px,3.4vw,20px)}}
